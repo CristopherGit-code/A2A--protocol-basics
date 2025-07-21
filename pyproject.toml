@@ -1,0 +1,11 @@
+[project]
+name = "a2a-basics"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "envyaml>=1.10.211231",
+    "oci>=2.155.2",
+    "python-box>=7.3.2",
+]
