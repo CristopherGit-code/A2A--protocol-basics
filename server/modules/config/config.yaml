@@ -9,3 +9,7 @@ oci_client:
   freq_penalty: 0
   top_p: 0.75
   top_k: 0
+langfuse:
+  SECRET_VM_KEY:  ${SECRET_VM_KEY}
+  PUBLIC_VM_KEY:  ${PUBLIC_VM_KEY}
+  VM_HOST:  ${VM_HOST}
