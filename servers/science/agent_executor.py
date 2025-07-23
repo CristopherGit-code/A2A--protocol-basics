@@ -2,7 +2,7 @@ from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.events import EventQueue
 from a2a.server.tasks import TaskUpdater
 from a2a.utils import new_agent_text_message
-from song_agent import SongAgent
+from agent import ScienceAgent
 from a2a.types import (
     InternalError,
     InvalidParamsError,
@@ -22,11 +22,11 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-class SongAgentExecutor(AgentExecutor):
+class ScienceAgentExecutor(AgentExecutor):
     """ Test song agent streaming """
 
     def __init__(self):
-        self.agent = SongAgent()
+        self.agent = ScienceAgent()
 
     async def execute(
         self,

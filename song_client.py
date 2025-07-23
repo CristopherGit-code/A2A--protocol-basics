@@ -21,6 +21,7 @@ async def main() -> None:
     logger = logging.getLogger(__name__)  
 
     base_url = 'http://localhost:9999'
+    timeout = 30.0
 
     async with httpx.AsyncClient() as httpx_client:
         resolver = A2ACardResolver(
@@ -74,8 +75,8 @@ async def main() -> None:
             id=str(uuid4()), params=MessageSendParams(**send_message_payload)
         )
 
-        response = await client.send_message(request)
         print("First response:\n")
+        response = await client.send_message(request, http_kwargs={"timeout": timeout})
         print(response.model_dump(mode='json', exclude_none=True))
 
         send_message_payload_multiturn: dict[str, Any] = {
@@ -95,7 +96,7 @@ async def main() -> None:
             params=MessageSendParams(**send_message_payload_multiturn),
         )
 
-        response = await client.send_message(request)
+        response = await client.send_message(request,http_kwargs={"timeout": timeout})
         print("Second response:\n")
         print(response.model_dump(mode='json', exclude_none=True))
 
@@ -117,7 +118,7 @@ async def main() -> None:
             params=MessageSendParams(**second_send_message_payload_multiturn),
         )
 
-        second_response = await client.send_message(second_request)
+        second_response = await client.send_message(second_request,http_kwargs={"timeout": timeout})
         print("Second response schema\n")
         print(second_response.model_dump(mode='json', exclude_none=True))
         # --8<-- [end:Multiturn]
@@ -128,7 +129,7 @@ async def main() -> None:
             id=str(uuid4()), params=MessageSendParams(**send_message_payload)
         )
 
-        stream_response = client.send_message_streaming(streaming_request)
+        stream_response = client.send_message_streaming(streaming_request,http_kwargs={"timeout": timeout})
 
         async for chunk in stream_response:
             print("==========")

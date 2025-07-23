@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 import uuid
 from langfuse import Langfuse
 from langfuse.langchain import CallbackHandler
@@ -16,7 +18,7 @@ class FuseConfig:
     def _init(self):
         if self._initialized:
             return
-        self.settings = Settings("C:/Users/Cristopher Hdz/Desktop/Test/a2a_basics/server/modules/config/config.yaml")   
+        self.settings = Settings(r"C:\Users\Cristopher Hdz\Desktop\Test\a2a_basics\servers\art\modules\config\config.yaml")   
         """ 
         CLOUD HOSTS
         Langfuse(

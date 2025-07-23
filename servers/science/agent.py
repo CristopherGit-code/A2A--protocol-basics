@@ -2,8 +2,6 @@ from collections.abc import AsyncIterable
 from typing import Any
 from langchain_core.messages import AIMessage, ToolMessage
 from langchain_core.tools import tool
-from langchain_community.chat_models import ChatOCIGenAI
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
 from modules.fuse_config import FuseConfig
@@ -15,25 +13,23 @@ id = fuse_handler.generate_id()
 memory = MemorySaver()
 
 @tool
-def add_song(name:str)->str:
-    """ Adds a song to user playlist """
-    return f"{name} added to user playlist successfully"
+def get_definition(word:str)->str:
+    """ looks up the definition for a given word """
+    return "No definition found for the word"
 
-class SongAgent:
-    """ Song agent - expert in adding songs to playlist """
+class ScienceAgent:
+    """ Science agent - expert in provide scientific information about a topic """
 
     SYSTEM_INSTRUCTION = (
-        "You are an expert in manage the new songs for the user playlist"
-        "You can use the add_song tool to complete queries about adding songs to playlist"
-        "Do not attempt to answer not playlist related questions, politely indicate that you have no such capacity"
+        "You are an expert in writing scientific papers or paragraphs."
+        "You can use the get_definition tool to complete queries about looking for word meaning."
+        "Use scientific language to answer and always use formal tone"
+        "Always anser in less than 200 words"
     )
 
     def __init__(self):
         self.model = oci_client.build_llm_client()
-        # model_source = os.getenv('model_source', 'google')
-        # if model_source == 'google':
-        #     self.model = ChatGoogleGenerativeAI(model='gemini-2.0-flash')
-        self.tools = [add_song]
+        self.tools = [get_definition]
         self.song_agent = create_react_agent(
             model=self.model,
             tools=self.tools,
@@ -45,7 +41,6 @@ class SongAgent:
         inputs = {'messages': [('user', query)]}
         config = {'configurable': {'thread_id': context_id},'callbacks':[fuse_handler.get_handler()],'metadata':{'langfuse_session_id':id}}
         final_response = []
-        # Solve the AI Message msgpack error with try instead of library change
         try:
             for chunk in self.song_agent.stream(inputs,config,stream_mode="values"):
                 message = chunk['messages'][-1]

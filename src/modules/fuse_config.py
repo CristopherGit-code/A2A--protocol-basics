@@ -16,7 +16,7 @@ class FuseConfig:
     def _init(self):
         if self._initialized:
             return
-        self.settings = Settings("C:/Users/Cristopher Hdz/Desktop/Test/a2a_basics/server/modules/config/config.yaml")   
+        self.settings = Settings(r"C:\Users\Cristopher Hdz\Desktop\Test\a2a_basics\src\modules\config\config.yaml")   
         """ 
         CLOUD HOSTS
         Langfuse(

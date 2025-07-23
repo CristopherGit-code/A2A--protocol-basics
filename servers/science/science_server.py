@@ -11,8 +11,8 @@ from a2a.server.tasks import (
 )
 from a2a.server.apps import A2AStarletteApplication
 from a2a.server.request_handlers import DefaultRequestHandler
-from song_agent import SongAgent
-from song_agent_executor import SongAgentExecutor
+from agent import ScienceAgent
+from agent_executor import ScienceAgentExecutor
 
 
 logging.basicConfig(level=logging.INFO)
@@ -20,24 +20,24 @@ logger = logging.getLogger(__name__)
 
 @click.command()
 @click.option("--host","host",default="localhost")
-@click.option("--port","port",default=9999)
+@click.option("--port","port",default=8888)
 def main(host,port):
     try:
         capabilities = AgentCapabilities(streaming=True,push_notifications=True)
         skill = AgentSkill(
-            id="queue_song",
-            name="Queue songs playlist tool",
-            description="Helps with queue of songs into the user playlist",
-            tags=["queue song","playlist"],
-            examples=["Add the song blue to my playlist"]
+            id="get_definition",
+            name="Gets the word definition for a term",
+            description="Helps getting definition for unknown terms",
+            tags=["definition","words"],
+            examples=["What is the meaning of LamBot?"]
         )
         agent_card = AgentCard(
-            name="Song agent",
-            description="Helps user with adding songs to playlist",
+            name="Science agent",
+            description="Helps user write scientific papers or paragraphs",
             url=f"http://{host}:{port}/",
             version="1.0.0",
-            default_input_modes=SongAgent.SUPPORTED_CONTENT_TYPES,
-            default_output_modes=SongAgent.SUPPORTED_CONTENT_TYPES,
+            default_input_modes=ScienceAgent.SUPPORTED_CONTENT_TYPES,
+            default_output_modes=ScienceAgent.SUPPORTED_CONTENT_TYPES,
             capabilities=capabilities,
             skills=[skill]
         )
@@ -46,7 +46,7 @@ def main(host,port):
         push_config_store = InMemoryPushNotificationConfigStore()
         push_sender = BasePushNotificationSender(httpx_client=httpx_client,config_store=push_config_store)
         request_handler = DefaultRequestHandler(
-            agent_executor=SongAgentExecutor(),
+            agent_executor=ScienceAgentExecutor(),
             task_store=InMemoryTaskStore(),
             push_config_store=push_config_store,
             push_sender= push_sender

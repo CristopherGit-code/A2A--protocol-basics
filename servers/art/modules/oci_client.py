@@ -1,4 +1,6 @@
-from server.modules.config.config import Settings
+from dotenv import load_dotenv
+load_dotenv()
+from .config.config import Settings
 from langchain_community.chat_models.oci_generative_ai import ChatOCIGenAI
 
 class LLM_Client:
@@ -14,7 +16,7 @@ class LLM_Client:
     def _init(self):
         if self._initialized:
             return
-        self.settings = Settings("C:/Users/Cristopher Hdz/Desktop/Test/a2a_basics/server/modules/config/config.yaml")
+        self.settings = Settings(r"C:\Users\Cristopher Hdz\Desktop\Test\a2a_basics\servers\art\modules\config\config.yaml")
         self._initialized = True
 
     def build_llm_client(self):
