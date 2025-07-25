@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 from .config.config import Settings
 from langchain_community.chat_models.oci_generative_ai import ChatOCIGenAI
 

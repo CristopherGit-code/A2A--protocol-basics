@@ -14,7 +14,7 @@ memory = MemorySaver()
 
 @tool
 def find_word(word:str)->str:
-    """ Looks for  """
+    """ Looks for  unknown word definition"""
     return "No other words found"
 
 class ArtAgent:
@@ -22,7 +22,7 @@ class ArtAgent:
 
     SYSTEM_INSTRUCTION = (
         "You are an expert in writting poems about a given topic from the user"
-        "You can use the find_word tool to find synonims to words"
+        "Call a tool only when needed, if the query could be answered without a tool, anwer. PRIORITY is getting the user a good resposne to query"
         "Always answer in poem structure, use literal resources."
         "Always anser in less than 200 words"
     )

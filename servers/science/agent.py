@@ -14,17 +14,18 @@ memory = MemorySaver()
 
 @tool
 def get_definition(word:str)->str:
-    """ looks up the definition for a given word """
+    """ looks up the definition for word """
     return "No definition found for the word"
 
 class ScienceAgent:
     """ Science agent - expert in provide scientific information about a topic """
 
     SYSTEM_INSTRUCTION = (
-        "You are an expert in writing scientific papers or paragraphs."
-        "You can use the get_definition tool to complete queries about looking for word meaning."
+        "Act as an expert in science matters to answer the user questions"
         "Use scientific language to answer and always use formal tone"
+        "You are an expert in writing scientific paragraphs about a topic provided"
         "Always anser in less than 200 words"
+        "Call a tool only when needed, if the query could be answered without a tool, anwer. PRIORITY is getting the user a good resposne to query"
     )
 
     def __init__(self):
