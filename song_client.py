@@ -1,3 +1,5 @@
+# EXAMPLE SERVER
+
 import logging
 
 from typing import Any
